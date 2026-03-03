@@ -1,98 +1,148 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Image, FlatList, TouchableOpacity, ImageBackground } from "react-native";
+import { useState } from "react";
+import { useRouter } from "expo-router";
+import Navbar from "../../components/Navbar";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+export default function Home() {
 
-export default function HomeScreen() {
+  const router = useRouter();
+
+
+  const styles = StyleSheet.create({
+    // header: {
+    //   backgroundColor: "#2f7d32",
+    //   padding: 20,
+    //   borderBottomLeftRadius: 20,
+    //   borderBottomRightRadius: 20,
+    //   borderTopLeftRadius: 20,
+    //   borderTopRightRadius: 20,
+    // },
+
+    welcome: {
+      color: "#fff",
+      fontSize: 18,
+      fontWeight: "bold",
+      textAlign: "center",
+    },
+
+    location: {
+      color: "#ffffff",
+      textAlign: "center",
+    },
+
+    searchBox: {
+      backgroundColor: "#fff",
+      margin: 15,
+      padding: 10,
+      borderRadius: 10,
+      elevation: 3,
+    },
+
+    card: {
+      backgroundColor: "#fff",
+      borderRadius: 15,
+      overflow: "hidden",
+      flex: 1,
+      margin: 8,
+      elevation: 4,
+    },
+
+    cardImage: {
+      height: 100,
+    },
+
+    cardText: {
+      padding: 10,
+      fontWeight: "bold",
+    },
+
+    container: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      paddingTop: 700,
+    },
+
+    button: {
+      backgroundColor: "#1a4104ff",
+      paddingVertical: 12,
+      paddingHorizontal: 30,
+      borderRadius: 8,
+    },
+    text: {
+      color: "white",
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+  });
+
+  // const [search, setSearch] = useState("");
+
+  // const services = [
+  //   { id: "1", name: "Garden Cleaning", image: "https://img.freepik.com/free-photo/green-houseplant-background-plant-lovers_53876-128849.jpg?semt=ais_user_personalization&w=740&q=80" },
+  //   { id: "2", name: "Lawn Cutting", image: "https://cloudfrontgharpediabucket.gharpedia.com/uploads/2024/09/Indoor-Plants-Guide-01-0505180010.jpg" },
+  //   { id: "3", name: "Tree Trimming", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSULcL_fMJE1TpbCYDRx3xqZrzvTrckzlo3QQ&s" },
+  //   { id: "4", name: "Watering Plants", image: "https://hips.hearstapps.com/hmg-prod/images/best-indoor-plants-6741d38777f63.jpg?crop=1xw:0.4340763694522191xh;0,0.465xh" },
+  //   { id: "5", name: "Plant Care", image: "https://cdn.decornation.in/wp-content/uploads/2016/11/house-plants-decor-grouping.jpg" },
+  // ];
+
+  // const filteredServices = services.filter(item =>
+  //   item.name.toLowerCase().includes(search.toLowerCase())
+  // );
+
+  const renderItem = ({ item }: any) => (
+    <View style={styles.card}>
+      <Image
+        source={{ uri: item.image }}
+        style={styles.cardImage}
+      />
+      <Text style={styles.cardText}>{item.name}</Text>
+    </View>
+  );
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <ImageBackground
+      source={{
+        uri: "https://i.pinimg.com/736x/f2/42/f5/f242f526a5f69d860a5e78f22cd10afd.jpg"
+      }}
+      style={{ flex: 1 }}
+      resizeMode="cover"
+    >
+      <Navbar />
+      {/* <View style={styles.header}> */}
+      {/* <Text style={styles.welcome}>PLANTARIUM</Text>
+      <Text style={styles.location}>Your Plant Care Companion</Text> */}
+      {/* </View> */}
+
+      {/* <View style={styles.searchBox}>
+        <TextInput
+          placeholder="Search services..."
+          value={search}
+          onChangeText={setSearch}
+        />
+      </View> */}
+
+      {/* 
+      <FlatList
+        data={filteredServices}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        contentContainerStyle={{ padding: 15 }}
+      /> */}
+
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.push("/products")}
+        >
+          <Text style={styles.text}>View Products</Text>
+        </TouchableOpacity>
+      </View>
+
+    </ImageBackground>
   );
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+
